@@ -1,0 +1,21 @@
+Q1 ="select matchcaptain.captain,matchcaptain.team_id,player.jersey_no,player.name,player.date_of_birth,player.age from player inner join matchcaptain on matchcaptain.captain = player.player_id where  exists (select captain from matchcaptain where matchcaptain.captain = player.player_id) and not exists (select goal_id from goaldetails where player.player_id = goaldetails.player_id );"
+
+Q2 = "select team.team_id ,count(matchteamdetails.match_no) from team inner join matchteamdetails on team.team_id = matchteamdetails.team_id group by matchteamdetails.team_id;"
+
+Q3 = "select team_id ,count(goal_id)/23.0 from goaldetails group by team_id;"
+
+Q4 = "select captain,count(match_no) from matchcaptain group by captain;"
+
+Q5 = "select count(distinct matchcaptain.captain) from player inner join match on match.player_of_match = player.player_id inner join matchcaptain on matchcaptain.captain = player.player_id where match.match_no = matchcaptain.match_no;"
+
+Q6 = "select distinct captain from player inner join matchcaptain where player.player_id = matchcaptain.captain and player.player_id not in (select player_of_match from match);"
+
+Q7 = "select strftime ('%m',play_date) as m,count(match_no) from match group by m;"
+
+Q8 = "select player.jersey_no,count(matchcaptain.captain) as no_captain from  matchcaptain inner join player on matchcaptain.captain = player.player_id group by player.jersey_no order by no_captain desc,player.jersey_no desc;"
+
+Q10 = "select team.team_id,avg(player.age) from team inner join player on player.team_id = team.team_id group by team.team_id"
+
+Q11 = "select avg(player.age) from player inner join matchcaptain on player.player_id = matchcaptain.captain;"
+
+Q12 = "select distinct (strftime ('%m',date_of_birth)) as m,count(player_id) from player group by m order by count(player_id) desc,m desc;"
